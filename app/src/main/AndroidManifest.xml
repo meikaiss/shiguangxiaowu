@@ -40,7 +40,6 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="key">
-            //开发者申请的key
         </meta-data>
 
 

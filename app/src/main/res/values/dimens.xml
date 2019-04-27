@@ -2,4 +2,5 @@
 <resources>
 
     <dimen name="sg__family_member_outline_width">3dp</dimen>
+    <dimen name="sg__family_member_square_dimen">50dp</dimen>
 </resources>

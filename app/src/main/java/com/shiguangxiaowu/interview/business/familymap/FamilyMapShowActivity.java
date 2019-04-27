@@ -6,19 +6,27 @@ import android.content.Intent;
 
 import com.shiguangxiaowu.interview.R;
 import com.shiguangxiaowu.interview.base.BaseTimeActivity;
+import com.shiguangxiaowu.interview.business.familymap.model.FamilyMemberModel;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by meikai on 2019/04/27.
  */
 public class FamilyMapShowActivity extends BaseTimeActivity {
 
-    FamilyMapShowFragment fragment;
+    private static final String KEY_MEMBER_LIST = "KEY_MEMBER_LIST";
 
-    public static void start(Context context){
+    private FamilyMapShowFragment fragment;
+    private List<FamilyMemberModel> memberModelList;
+
+    public static void start(Context context, List<FamilyMemberModel> memberModelList) {
         Intent intent = new Intent(context, FamilyMapShowActivity.class);
-        if (!(context instanceof Activity)){
+        if (!(context instanceof Activity)) {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
+        intent.putExtra(KEY_MEMBER_LIST, (Serializable) memberModelList);
         context.startActivity(intent);
     }
 
@@ -29,7 +37,11 @@ public class FamilyMapShowActivity extends BaseTimeActivity {
 
     @Override
     protected void initView() {
+
+        memberModelList = (List<FamilyMemberModel>) getIntent().getSerializableExtra(KEY_MEMBER_LIST);
+
         fragment = new FamilyMapShowFragment();
+        fragment.setMemberModelList(memberModelList);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 fragment).commitAllowingStateLoss();

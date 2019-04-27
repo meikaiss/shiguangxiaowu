@@ -33,13 +33,18 @@ public class ViewBitmapUtil {
      * 获取 View 视图的 bitmap， 用于 View 未挂载显示在界面上
      */
     public static Bitmap getBitmapFromVirtualView(View view, float widthDp, float heightDp) {
+        return getBitmapFromVirtualView(view, DimenUtil.dp2px(view.getContext(), widthDp),
+                DimenUtil.dp2px(view.getContext(), heightDp));
+    }
+
+    public static Bitmap getBitmapFromVirtualView(View view, int widthPx, int heightPx) {
         if (view == null) {
             return null;
         }
 
-        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(DimenUtil.dp2px(view.getContext(), widthDp),
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(widthPx,
                 View.MeasureSpec.EXACTLY);
-        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(DimenUtil.dp2px(view.getContext(), heightDp),
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(heightPx,
                 View.MeasureSpec.EXACTLY);
         view.measure(widthMeasureSpec, heightMeasureSpec);
 
@@ -53,9 +58,9 @@ public class ViewBitmapUtil {
         frameLayout.layout(0, 0, frameLayout.getMeasuredWidth(), frameLayout.getMeasuredHeight());
 
         Bitmap cacheBitmap = frameLayout.getDrawingCache();
-        if (cacheBitmap == null){
+        if (cacheBitmap == null) {
             return null;
-        }else{
+        } else {
             return cacheBitmap.copy(Bitmap.Config.ARGB_8888, false);
         }
     }

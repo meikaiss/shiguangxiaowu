@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="sg__family_member_outline_width">3dp</dimen>
+</resources>

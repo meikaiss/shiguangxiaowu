@@ -37,6 +37,10 @@
             android:name=".business.familymap.FamilyMapShowActivity"
             android:label="我的家人"/>
 
+        <activity
+            android:name=".business.fencemap.FenceMapActivity"
+            android:label="地理围栏"/>
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="key">

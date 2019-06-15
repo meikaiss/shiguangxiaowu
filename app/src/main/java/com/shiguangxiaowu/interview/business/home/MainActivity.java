@@ -7,6 +7,7 @@ import android.view.View;
 import com.shiguangxiaowu.interview.R;
 import com.shiguangxiaowu.interview.business.familymap.FamilyMapShowActivity;
 import com.shiguangxiaowu.interview.business.familymap.model.FamilyMemberModel;
+import com.shiguangxiaowu.interview.business.fencemap.FenceMapActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 FamilyMapShowActivity.start(MainActivity.this, memberModelList);
+            }
+        });
+
+        findViewById(R.id.btn_open_fence).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FenceMapActivity.start(MainActivity.this);
             }
         });
     }

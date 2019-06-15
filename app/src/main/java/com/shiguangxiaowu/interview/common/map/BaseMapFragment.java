@@ -49,6 +49,8 @@ public abstract class BaseMapFragment extends BaseTimeFragment {
 
         mapController = new MapController(baseMapView);
 
+        initData();
+
         iTimeMapOverlay = generateOverlay();
 
         if (iTimeMapOverlay != null) {
@@ -56,7 +58,6 @@ public abstract class BaseMapFragment extends BaseTimeFragment {
             iTimeMapOverlay.onDraw();
         }
 
-        initData();
     }
 
     protected abstract void initData();

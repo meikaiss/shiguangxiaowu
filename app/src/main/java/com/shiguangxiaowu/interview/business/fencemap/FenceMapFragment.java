@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CoordinateConverter;
 import com.amap.api.maps.model.LatLng;
 import com.shiguangxiaowu.interview.R;
@@ -64,6 +65,16 @@ public class FenceMapFragment extends BaseMapFragment {
 
         fencePointListGCJ = new ArrayList<>();
 
+        fencePointListGCJ.add(new FencePoint(0.00, 114.0));
+        fencePointListGCJ.add(new FencePoint(0.00, 150.0));
+        fencePointListGCJ.add(new FencePoint(90.00, 150.0));
+        fencePointListGCJ.add(new FencePoint(90.00, 114.0));
+
+        AMapUtils.calculateLineDistance(new LatLng(90.00, 150.0), new LatLng(90.00, 114.0));
+        AMapUtils.calculateLineDistance(new LatLng(0, 150.0), new LatLng(0, 114.0));
+
+
+        /**
         fencePointListGCJ.add(new FencePoint(30.00, 90.00));
         fencePointListGCJ.add(new FencePoint(30.00, 90.10));
         fencePointListGCJ.add(new FencePoint(30.00, 90.20));
@@ -101,6 +112,7 @@ public class FenceMapFragment extends BaseMapFragment {
         fencePointListGCJ.add(new FencePoint(30.20, 90.00));
         fencePointListGCJ.add(new FencePoint(30.10, 90.00));
         fencePointListGCJ.add(new FencePoint(30.00, 90.00));
+         */
 
 
         fencePointListWGS = new ArrayList<>(fencePointListGCJ.size());

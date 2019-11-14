@@ -1,85 +1,106 @@
 package com.shiguangxiaowu.interview.business.home;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.shiguangxiaowu.interview.R;
-import com.shiguangxiaowu.interview.business.familymap.FamilyMapShowActivity;
-import com.shiguangxiaowu.interview.business.familymap.model.FamilyMemberModel;
+import com.shiguangxiaowu.interview.business.apng.APngActivity;
+import com.shiguangxiaowu.interview.business.familymap.FamilyMapGuideActivity;
 import com.shiguangxiaowu.interview.business.fencemap.FenceMapActivity;
+import com.shiguangxiaowu.interview.business.placeholder.PlaceHolderActivity;
+import com.shiguangxiaowu.interview.common.util.DimenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by meikai on 2019/07/30.
+ */
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private MainAdapter mainAdapter;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sg__main_activity);
 
-        findViewById(R.id.btn_open_demo).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        recyclerView = findViewById(R.id.main_recycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                List<FamilyMemberModel> memberModelList = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
-                    FamilyMemberModel memberModel = new FamilyMemberModel();
-                    memberModel.id = 100 + i;
-                    memberModel.nickName = "昵称" + i;
-                    memberModel.avatar = avatarUrlList.get((int) Math.round(Math.random() * (avatarUrlList.size() - 1)));
-                    memberModel.role = roleList.get((int) Math.round(Math.random() * (roleList.size() - 1)));
-                    memberModel.lat = 34.341568 + 2 * (Math.random() * 2 - 1);
-                    memberModel.lng = 108.940174 + 5 * (Math.random() * 2 - 1);
+        mainAdapter = new MainAdapter();
+        recyclerView.setAdapter(mainAdapter);
 
-                    memberModelList.add(memberModel);
-                }
-
-                FamilyMapShowActivity.start(MainActivity.this, memberModelList);
-            }
-        });
-
-        findViewById(R.id.btn_open_fence).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FenceMapActivity.start(MainActivity.this);
-            }
-        });
     }
 
-    private List<String> roleList = new ArrayList() {
-        {
-            add("我");
-            add("爸爸");
-            add("妈妈");
-            add("爷爷");
-            add("奶奶");
-            add("哥哥");
-            add("弟弟");
-            add("姐姐");
-            add("妹妹");
-            add("外公");
-            add("外婆");
-            add("");
-        }
-    };
+    private static class MainAdapter extends RecyclerView.Adapter<MainVH>{
 
-    private List<String> avatarUrlList = new ArrayList() {
-        {
-            add("http://img4.imgtn.bdimg.com/it/u=2702928358,1983540142&fm=26&gp=0.jpg");
-            add("http://b-ssl.duitang.com/uploads/item/201804/29/20180429162017_nyzfa.thumb.700_0.jpg");
-            add("http://img2.imgtn.bdimg.com/it/u=2644676324,1946207392&fm=26&gp=0.jpg");
-            add("http://img2.imgtn.bdimg.com/it/u=2960908468,3515491574&fm=26&gp=0.jpg");
-            add("http://img3.imgtn.bdimg.com/it/u=320299743,2735495070&fm=11&gp=0.jpg");
-            add("http://img4.imgtn.bdimg.com/it/u=1854731975,1387458779&fm=26&gp=0.jpg");
-            add("http://www.leewiart.com/userfiles/37456/ef5b2d18912646579c1040ecc73dc8b2_view_720"
-                    + ".jpg?636132932205312500");
-            add("http://pic163.nipic.com/file/20180426/8737320_182218844088_2.jpg");
-            add("http://img.mp.itc.cn/upload/20170501/af6a2f6bccd8436ba64bd80dcf2af1dc_th.jpeg");
-            add("http://5b0988e595225.cdn.sohucs.com/q_70,c_zoom,w_640/images/20190401/1427911711ad4fd895c229b8268e8cf6.jpeg");
-            add("");
+        private List<Class> activityClassList = new ArrayList(){
+            {
+                add(FamilyMapGuideActivity.class);
+                add(FenceMapActivity.class);
+                add(PlaceHolderActivity.class);
+                add(APngActivity.class);
+            }
+        };
+
+        @NonNull
+        @Override
+        public MainVH onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
+            TextView textView = new TextView(viewGroup.getContext());
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+            RecyclerView.LayoutParams lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    DimenUtil.dp2px(viewGroup.getContext(), 50));
+            lp.setMarginStart(DimenUtil.dp2px(viewGroup.getContext(), 15));
+            textView.setLayoutParams(lp);
+
+            MainVH vh = new MainVH(textView);
+
+            return vh;
         }
-    };
+
+        @Override
+        public void onBindViewHolder(@NonNull MainVH mainVH, final int i) {
+
+            String className =  activityClassList.get(i).getSimpleName();
+            mainVH.textView.setText(className);
+
+            mainVH.textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), activityClassList.get(i));
+
+                    v.getContext().startActivity(intent);
+                }
+            });
+        }
+
+        @Override
+        public int getItemCount() {
+            return activityClassList.size();
+        }
+    }
+
+    private static class MainVH extends RecyclerView.ViewHolder{
+
+        public TextView textView;
+
+        public MainVH(@NonNull View itemView) {
+            super(itemView);
+            this.textView = (TextView) itemView;
+        }
+
+    }
 
 }

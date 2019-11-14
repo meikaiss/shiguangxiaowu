@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.shiguangxiaowu.interview"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -52,8 +52,17 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 
+    //一个在实际开发过中，可能并没有如它描述的那么大用途的第三方工具类库
+    implementation 'de.greenrobot:java-common:2.3.1'
+
 
     implementation 'com.amap.api:3dmap:latest.integration'
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    // https://mvnrepository.com/artifact/com.android.support/recyclerview-v7
+    implementation group: 'com.android.support', name: 'recyclerview-v7', version: '28.0.0'
+
+    implementation 'com.github.sahasbhop:apng-view:1.3'
+
 }
